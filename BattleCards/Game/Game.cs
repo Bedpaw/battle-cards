@@ -27,7 +27,7 @@ namespace BattleCards
             {
                 var cardsToCompare = Players.GiveFirstCard();
                 var categoryToCompare = Players.ActivePlayer.CategorySelector.SelectCategory();
-
+                
                 Compare.CompareCards(categoryToCompare, cardsToCompare, Players.PlayersList);
                 var playerWhoWinRound = Compare.GetWinner();
                 
@@ -38,7 +38,6 @@ namespace BattleCards
 
                 Players.SwapActivePlayer();
             }
-
             DisplayEndGameResults();
         }
 

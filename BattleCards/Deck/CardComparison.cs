@@ -14,5 +14,6 @@ namespace BattleCards.Deck
         {
             throw new System.NotImplementedException();
         }
+        
     }
 }
