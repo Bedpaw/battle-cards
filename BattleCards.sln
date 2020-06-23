@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCards", "BattleCards\BattleCards.csproj", "{DE1B6B88-709A-4234-BDB8-790796D9C5D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BattleCardsUnitTests", "BattleCardsUnitTests\BattleCardsUnitTests.csproj", "{5A988366-C473-4BD2-8472-797F2B86B5CE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DE1B6B88-709A-4234-BDB8-790796D9C5D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE1B6B88-709A-4234-BDB8-790796D9C5D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE1B6B88-709A-4234-BDB8-790796D9C5D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE1B6B88-709A-4234-BDB8-790796D9C5D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5A988366-C473-4BD2-8472-797F2B86B5CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5A988366-C473-4BD2-8472-797F2B86B5CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5A988366-C473-4BD2-8472-797F2B86B5CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5A988366-C473-4BD2-8472-797F2B86B5CE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
