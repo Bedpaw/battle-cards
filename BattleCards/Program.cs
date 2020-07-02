@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace BattleCards
 {
@@ -9,7 +8,8 @@ namespace BattleCards
         {
             
             var director = new GameDirector();
-            var choice = 0; //MOCK
+            var choice = 1; //MOCK
+            
             
             GameBuilder builder = choice switch
             {

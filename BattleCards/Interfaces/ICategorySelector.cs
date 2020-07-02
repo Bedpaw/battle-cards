@@ -2,6 +2,6 @@
 {
     public interface ICategorySelector
     {
-        public string SelectCategory();
+        public string SelectCategory(Card cardToChooseCategory);
     }
 }

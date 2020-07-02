@@ -1,30 +1,20 @@
-﻿using System.Security.Cryptography;
+﻿using System.Collections.Generic;
+using System.Security.Cryptography;
+using BattleCards.Deck;
 
 namespace BattleCards
 {
     public class Card
     {
         public string Name { get; set; }
-        public string Category1 { get; set; }
-        public string Category2 { get; set; }
-        public string Category3 { get; set; }
-        public string Category4 { get; set; }
-        
-        
-        public Card(
-            string name,
-            string category1,
-            string category2,
-            string category3,
-            string category4
-        )
+
+        internal enum Categories { First = 0, Second = 1, Third = 2, Fourth = 3 }
+        public Dictionary<int, Category> CardStats { get; set; } 
+
+        public Card(string name, Dictionary<int, Category> cardStats)
         {
             Name = name;
-            Category1 = category1;
-            Category2 = category2;
-            Category3 = category3;
-            Category4 = category4;
-
+            CardStats = cardStats;
         }
     }
 }

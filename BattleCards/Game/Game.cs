@@ -9,12 +9,8 @@ namespace BattleCards
     {
         private Players Players { get; set; }
         private ICardComparison Compare { get; set; }
-        public Game(
-            IEnumerable cardsDeck,
-            List<Player> listOfPlayers,
-            int numberOfCardsForEachPlayer,
-            ICardComparison compareRules
-            )
+        public Game(List<Card> cardsDeck, List<Player> listOfPlayers, int numberOfCardsForEachPlayer,
+            ICardComparison compareRules)
         {
             Players = new Players(listOfPlayers);
             DealCardsForPlayers(numberOfCardsForEachPlayer, cardsDeck);
@@ -26,7 +22,7 @@ namespace BattleCards
             while (true)
             {
                 var cardsToCompare = Players.GiveFirstCard();
-                var categoryToCompare = Players.ActivePlayer.CategorySelector.SelectCategory();
+                var categoryToCompare = Players.ActivePlayer.CategorySelector.SelectCategory(Players.ActivePlayer.CardForActualRound);
                 
                 Compare.CompareCards(categoryToCompare, cardsToCompare, Players.PlayersList);
                 var playerWhoWinRound = Compare.GetWinner();
@@ -46,9 +42,21 @@ namespace BattleCards
             throw new NotImplementedException();
         }
         
-        private void DealCardsForPlayers(int numberOfCardsForEachPlayer,  IEnumerable cardsDeck)
+        private void DealCardsForPlayers(int numberOfCardsForEachPlayer,  List<Card> cardsDeck)
         {
-            throw new NotImplementedException();
+            int i = 2;
+            foreach (var card in cardsDeck)
+            {
+                if (i % 2 == 0)
+                {
+                    Players.PlayersList[0].Deck.Enqueue(card);
+                }
+                else
+                {
+                    Players.PlayersList[1].Deck.Enqueue(card);
+                }
+                i++;
+            }
         }
     }
 }

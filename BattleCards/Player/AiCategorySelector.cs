@@ -4,7 +4,7 @@ namespace BattleCards
 {
     public class AiCategorySelector : ICategorySelector
     {
-        public string SelectCategory()
+        public string SelectCategory(Card cardToChooseCategory)
         {
             throw new System.NotImplementedException();
         }

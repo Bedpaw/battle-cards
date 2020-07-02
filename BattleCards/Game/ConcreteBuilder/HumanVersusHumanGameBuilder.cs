@@ -14,9 +14,7 @@ namespace BattleCards
         
             public override void BuildCardsDeck()
         {
-            IDeckReader deckReader = new FromCsvFileReader();
-            _deck = deckReader.GetListOfCards(
-                @"C:\Users\bedpa\RiderProjects\BattleCards\BattleCards\Db\cards.csv"); // :TODO change to relative path
+            _deck = new DeckCreator(120).Deck;
         }
 
         public override void BuildPlayersList()
