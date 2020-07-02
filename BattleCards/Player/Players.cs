@@ -27,7 +27,16 @@ namespace BattleCards
 
         public void SwapActivePlayer()
         {
-            throw new System.NotImplementedException();
+            var activeIndex = PlayersList.IndexOf(ActivePlayer);
+            
+            ActivePlayer = (activeIndex == PlayersList.Count - 1)
+                ? PlayersList[0]
+                : PlayersList[activeIndex + 1];
+        }
+
+        public Player GetCardOwner(Card winnerCard)
+        {
+            return PlayersList.Find(player => player.CardForActualRound.Equals(winnerCard));
         }
     }
 }

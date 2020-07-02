@@ -9,12 +9,14 @@ namespace BattleCards
     {
         private Players Players { get; set; }
         private ICardComparison Compare { get; set; }
+        private IDisplay Display { get; set; }
         public Game(List<Card> cardsDeck, List<Player> listOfPlayers, int numberOfCardsForEachPlayer,
-            ICardComparison compareRules)
+            ICardComparison compareRules, IDisplay display)
         {
             Players = new Players(listOfPlayers);
             DealCardsForPlayers(numberOfCardsForEachPlayer, cardsDeck);
             Compare = compareRules;
+            Display = display;
         }
         
         public void GameLogic()
@@ -22,12 +24,19 @@ namespace BattleCards
             while (true)
             {
                 var cardsToCompare = Players.GiveFirstCard();
+                
+                Display.ShowMenuForChoosingCompareCategory(Players.ActivePlayer.CardForActualRound, Players.ActivePlayer.Nick);
+                
                 var categoryToCompare = Players.ActivePlayer.CategorySelector.SelectCategory(Players.ActivePlayer.CardForActualRound);
+             
+                Display.ShowAllCardsInRound(Players.PlayersList, categoryToCompare);
                 
-                Compare.CompareCards(categoryToCompare, cardsToCompare, Players.PlayersList);
-                var playerWhoWinRound = Compare.GetWinner();
-                
+                var winnerCard = Compare.CompareCards(categoryToCompare, cardsToCompare);
+                var playerWhoWinRound = Players.GetCardOwner(winnerCard);
                 playerWhoWinRound.TakeAllCards(cardsToCompare);
+
+                Display.ShowInformationAboutRoundWinner(playerWhoWinRound);
+                
 
                 Players.RemovePlayersWithoutCards();
                 if (Players.PlayersList.Count == 1) break;
@@ -41,10 +50,10 @@ namespace BattleCards
         {
             throw new NotImplementedException();
         }
-        
+
         private void DealCardsForPlayers(int numberOfCardsForEachPlayer,  List<Card> cardsDeck)
-        {
-            int i = 2;
+        {    // Refactor to test only
+            var i = 2;
             foreach (var card in cardsDeck)
             {
                 if (i % 2 == 0)

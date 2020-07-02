@@ -8,6 +8,7 @@
             builder.BuildPlayersList();
             builder.BuildNumberOfCardsPerPlayer();
             builder.BuildCompareCardsRules();
+            builder.BuildDisplay();
         }
     }
 }

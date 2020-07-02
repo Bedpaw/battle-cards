@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCards.Deck;
 using BattleCards.Interfaces;
+using BattleCards.View;
 
 namespace BattleCards
 {
@@ -11,6 +12,7 @@ namespace BattleCards
         private List<Player> _playersList;
         private int _cardsPerPlayer;
         private ICardComparison _cardCompare;
+        private IDisplay _display;
 
         public override void BuildCardsDeck()
         {
@@ -38,13 +40,19 @@ namespace BattleCards
             _cardCompare = new IsCategoryValueTheBiggest();
         }
 
+        public override void BuildDisplay()
+        {
+            _display = new ConsoleDisplay();
+        }
+
         public override Game GetResult()
         {
             return new Game(
                 _deck,
                 _playersList,
                 _cardsPerPlayer,
-                _cardCompare
+                _cardCompare,
+                _display
             );
         }
     }

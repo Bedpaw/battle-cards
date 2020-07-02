@@ -1,18 +1,23 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BattleCards.Interfaces;
 
 namespace BattleCards.Deck
 {
     public class IsCategoryValueTheBiggest : ICardComparison
-    {
-        public void CompareCards(string categoryToCompare, List<Card> cardsToCompare, List<Player> listOfPlayers)
+    { 
+        public Card CompareCards(string categoryToCompare, List<Card> cardsToCompare)
         {
-            throw new System.NotImplementedException();
-        }
+            var categoryIndex = int.Parse(categoryToCompare);
+            var winnerCard = cardsToCompare[0];
+            
+            foreach (var card in cardsToCompare.Where(card => card.CardStats[categoryIndex].Value > winnerCard.CardStats[categoryIndex].Value))
+            {
+                winnerCard = card;
+            }
 
-        public Player GetWinner()
-        {
-            throw new System.NotImplementedException();
+            return winnerCard;
+
         }
         
     }

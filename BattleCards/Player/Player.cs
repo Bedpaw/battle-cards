@@ -5,6 +5,7 @@ namespace BattleCards
 {
     public class Player
     {
+        public string Nick { get; set; } = "Andrzej";
         public Player(ICategorySelector categorySelector) => CategorySelector = categorySelector;
         public ICategorySelector CategorySelector { get; set; }
         public Queue<Card> Deck { get; set; } = new Queue<Card>();
