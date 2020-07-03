@@ -27,6 +27,7 @@ namespace BattleCards
 
         public void SwapActivePlayer()
         {
+            //TODO what if 2 players out from round?
             var activeIndex = PlayersList.IndexOf(ActivePlayer);
             
             ActivePlayer = (activeIndex == PlayersList.Count - 1)
@@ -40,5 +41,10 @@ namespace BattleCards
         }
 
         public bool OnlyOneAlive() => PlayersList.Count == 1;
+
+        public void GiveOneCardAsPrize(List<Card> prizeContainer)
+        {
+            prizeContainer.AddRange(GiveFirstCard());
+        }
     }
 }

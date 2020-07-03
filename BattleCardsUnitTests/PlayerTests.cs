@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using BattleCards;
+using BattleCards.Deck;
 using NUnit.Framework;
 
 namespace BattleCardsUnitTests
 {
     public class PlayerTests
     {
+        private DeckCreator _deckCreator = new DeckCreator(2);
         [SetUp]
         public void Setup()
         {
@@ -13,13 +15,13 @@ namespace BattleCardsUnitTests
         [Test]
         public void TestGiveFirstCard()
         {
-            var player = new Player(new HumanCategorySelector()) {Deck = new Queue<Card>()};
-            player.Deck.Enqueue(new Card("First", "1", "2", "3", "4"));
-            player.Deck.Enqueue(new Card("Second", "1", "2", "3", "4"));
+            var player = new Player(new HumanCategorySelector());
+            player.Deck.Enqueue(_deckCreator.Deck[0]);
+            player.Deck.Enqueue(_deckCreator.Deck[1]);
             
             player.GiveFirstCard();
             
-            Assert.AreEqual("First", player.CardForActualRound.Name );
+            Assert.AreEqual(_deckCreator.Deck[0], player.CardForActualRound );
         }
         
     }

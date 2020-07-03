@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using BattleCards.Interfaces;
 
 namespace BattleCards
@@ -22,9 +23,10 @@ namespace BattleCards
         
         public void GameLogic()
         {
-            while (true)
+            while (Players.OnlyOneAlive() == false)
             {
-                Display.ShowGameStatus(Players.PlayersList, Players.ActivePlayer.Nick); 
+                Display.ShowGameStatus(Players.PlayersList, Players.ActivePlayer.Nick);
+                
                 var cardsToCompare = Players.GiveFirstCard();
                 var categoryToCompare = ChooseCategoryToCompare(Players.ActivePlayer);
                 
@@ -35,40 +37,44 @@ namespace BattleCards
                 
                 UpdateGameAfterRound();
                 
-                if (Players.OnlyOneAlive()) break;
-                Players.SwapActivePlayer();
             }
-            Display.ShowEndGameMessage(Players.PlayersList[0].Nick);
+            Display.ShowEndGameMessage(Players.ActivePlayer.Nick);
         }
 
         private void StartDrawLoop(string categoryToCompare)
-        { 
+        {    //TODO handle if 0 or 1 player can go to next round
             do
             {
                 var playersStillInRound = GetPlayersStillInRound();
+                
                 Display.ShowDrawMessage(playersStillInRound.PlayersList);
+                
+                playersStillInRound.GiveOneCardAsPrize(Compare.CardsFromAllRounds);
                 var cardsToCompare = playersStillInRound.GiveFirstCard();
-                    
+                
                 Display.ShowAllCardsInRound(playersStillInRound.PlayersList, categoryToCompare);
                 Compare.CompareCards(categoryToCompare, cardsToCompare);
                     
             } while (Compare.IsDraw()); 
         }
 
-        private Players GetPlayersStillInRound()
+        private Players GetPlayersStillInRound(bool withTwoOrMoreCards = true)
         {
             var playersWhichDrawInLastRound = Players.PlayersList
                 .FindAll(player => Compare.WinnerCardsFromLastRound
                     .Exists(card => player.CardForActualRound.Equals(card)));
-
-            return new Players(playersWhichDrawInLastRound.FindAll(player =>
+            if (withTwoOrMoreCards)
             {
-                if (player.Deck.Count >= 2) return true;
-                
-                Display.ShowPlayerHasNotEnoughCardsForDrawRounds(player.Nick);
-                return false;
+                return new Players(playersWhichDrawInLastRound.FindAll(player =>
+                {
+                    if (player.Deck.Count >= 2) return true;
 
-            }));
+                    Display.ShowPlayerHasNotEnoughCardsForDrawRounds(player.Nick);
+                    return false;
+
+                }));
+            }
+            return new Players(playersWhichDrawInLastRound);
         }
 
         private string ChooseCategoryToCompare(Player aPlayer)
@@ -85,7 +91,7 @@ namespace BattleCards
             Display.ShowInformationAboutRoundWinner(winner, Compare.CardsFromAllRounds.Count);
             Compare.ClearLastCompare();
             Players.RemovePlayersWithoutCards();
-
+            Players.SwapActivePlayer();
         }
         private void DealCardsForPlayers(int numberOfCardsForEachPlayer, List<Card> cardsDeck)
         {

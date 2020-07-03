@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using BattleCards;
+using BattleCards.Deck;
 using NUnit.Framework;
 
 namespace BattleCardsUnitTests
@@ -10,21 +11,25 @@ namespace BattleCardsUnitTests
         private Player _playerWithThreeCards;
         private Player _playerWithNoCards;
         private Player _playerAiWithOneCard;
+        private DeckCreator _deckCreator = new DeckCreator(5);
         
         [SetUp]
         public void Setup()
         {
-            _playerWithOneCard = new Player(new HumanCategorySelector()) {Deck = new Queue<Card>()};
-            _playerWithNoCards = new Player(new HumanCategorySelector()) {Deck = new Queue<Card>()};
-            _playerWithThreeCards = new Player(new HumanCategorySelector()) {Deck = new Queue<Card>()};
-            _playerAiWithOneCard= new Player(new AiCategorySelector()) {Deck = new Queue<Card>()};
+            var cards = _deckCreator.Deck;
             
-            _playerWithOneCard.Deck.Enqueue(new Card("First", "1", "2", "3", "4"));
-            _playerAiWithOneCard.Deck.Enqueue(new Card("First", "1", "2", "3", "4"));
+            _playerWithOneCard = new Player(new HumanCategorySelector());
+            _playerWithNoCards = new Player(new HumanCategorySelector());
+            _playerWithThreeCards = new Player(new HumanCategorySelector());
+            _playerAiWithOneCard= new Player(new AiCategorySelector());
             
-            _playerWithThreeCards.Deck.Enqueue(new Card("First", "1", "2", "3", "4"));
-            _playerWithThreeCards.Deck.Enqueue(new Card("Second", "1", "2", "3", "4"));
-            _playerWithThreeCards.Deck.Enqueue(new Card("Third", "1", "2", "3", "4"));
+            _playerWithOneCard.Deck.Enqueue(cards[0]);
+            _playerWithThreeCards.Deck.Enqueue(cards[1]);
+            _playerWithThreeCards.Deck.Enqueue(cards[2]);
+            _playerWithThreeCards.Deck.Enqueue(cards[3]);
+            _playerAiWithOneCard.Deck.Enqueue(cards[4]);
+            
+            
         }
         [TearDown]
         public void TearDown()

@@ -13,7 +13,7 @@ namespace BattleCards.View
             
             foreach (var (key, value) in cardToCompare.CardStats)
             {
-                Console.WriteLine($"{value.Name}: {value.Value}");
+                Console.WriteLine($"[{key + 1}] {value.Name}: {value.Value}");
             }
             Console.WriteLine("Please choose Category to compare: ");
         }
@@ -38,6 +38,7 @@ namespace BattleCards.View
         public void ShowEndGameMessage(string winnerNick)
         {
             Console.WriteLine($"Congrats {winnerNick}, you have won a game!");
+            Console.ReadKey();
         }
 
         public void ShowDrawMessage(List<Player> playersStillInRound)

@@ -8,7 +8,6 @@ namespace BattleCards
         {
             MainMenu.DisplayGameOptions();
             var game = MainMenu.CreateGameInChosenMode();
-            
             game.GameLogic();
         }
     }

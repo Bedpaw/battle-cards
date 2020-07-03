@@ -4,7 +4,8 @@ using System.Collections.Generic;
 namespace BattleCards
 {
     public static class MainMenu
-    {    private static List<string> gameOptions = new List<string>
+    {    
+        private static List<string> gameOptions = new List<string>
         {
             "Human vs AI",
             "Human vs Human",

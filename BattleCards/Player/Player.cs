@@ -12,7 +12,7 @@ namespace BattleCards
         public Player(ICategorySelector categorySelector)
         {
             CategorySelector = categorySelector;
-            Nick = Nicks[new Random().Next(0, Nicks.Count - 1)] + new Random().Next(1920, 2020);
+            Nick = Nicks[new Random().Next(0, Nicks.Count)] + new Random().Next(1920, 2020);
         }
         public ICategorySelector CategorySelector { get; set; }
         public Queue<Card> Deck { get; set; } = new Queue<Card>();
