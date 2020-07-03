@@ -44,10 +44,8 @@ namespace BattleCards
         { 
             do
             {
-                var playersStillInRound = new Players(Players.PlayersList
-                    .FindAll(player => Compare.WinnerCardsFromLastRound
-                    .Exists(card => player.CardForActualRound.Equals(card))));
-
+                var playersStillInRound = GetPlayersStillInRound();
+                Display.ShowDrawMessage(playersStillInRound.PlayersList);
                 var cardsToCompare = playersStillInRound.GiveFirstCard();
                     
                 Display.ShowAllCardsInRound(playersStillInRound.PlayersList, categoryToCompare);
@@ -56,6 +54,10 @@ namespace BattleCards
             } while (Compare.IsDraw()); 
         }
 
+        private Players GetPlayersStillInRound() => new Players(Players.PlayersList
+            .FindAll(player => Compare.WinnerCardsFromLastRound
+            .Exists(card => player.CardForActualRound.Equals(card))));
+        
         private string ChooseCategoryToCompare(Player aPlayer)
         {
             Display.ShowMenuForChoosingCompareCategory(aPlayer.CardForActualRound, aPlayer.Nick);
@@ -66,9 +68,9 @@ namespace BattleCards
         {
             var winner = Players.GetCardOwner(Compare.WinnerCardsFromLastRound[0]);
             winner.TakeAllCards(Compare.CardsFromAllRounds);
-            Compare.ClearLastCompare();
 
-            Display.ShowInformationAboutRoundWinner(winner);
+            Display.ShowInformationAboutRoundWinner(winner, Compare.CardsFromAllRounds.Count);
+            Compare.ClearLastCompare();
             Players.RemovePlayersWithoutCards();
 
         }

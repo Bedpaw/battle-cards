@@ -27,9 +27,9 @@ namespace BattleCards.View
                 Thread.Sleep(1000);
             }
         }
-        public void ShowInformationAboutRoundWinner(Player roundWinner)
+        public void ShowInformationAboutRoundWinner(Player roundWinner, int numberOfCardsWon)
         {    
-            Console.WriteLine($"{roundWinner.Nick} has won this round!");
+            Console.WriteLine($"\n{roundWinner.Nick} has won this round and took {numberOfCardsWon} cards!");
             Console.WriteLine("Press any button for next round");
             Console.ReadKey();
             Console.Clear();
@@ -38,6 +38,18 @@ namespace BattleCards.View
         public void ShowEndGameMessage(string winnerNick)
         {
             Console.WriteLine($"Congrats {winnerNick}, you have won a game!");
+        }
+
+        public void ShowDrawMessage(List<Player> playersStillInRound)
+        {
+            Console.WriteLine("IT'S DRAW!");
+            Console.WriteLine("STILL IN GAME:");
+            foreach (var player in playersStillInRound)
+            {
+                Console.WriteLine(player.Nick);
+                Thread.Sleep(500);
+            }
+            Thread.Sleep(1000);
         }
     }
 }

@@ -21,9 +21,15 @@ namespace BattleCards.Deck
                     var winnerValue = winnerCards[0].GetCategoryById(categoryToCompare).Value;
                     var currentValue = card.GetCategoryById(categoryToCompare).Value;
 
-                    if (currentValue > winnerValue) winnerCards = new List<Card> {card};
+                    if (currentValue > winnerValue)
+                    {
+                        winnerCards.ForEach(cardFromDraws => CardsFromAllRounds.Add(cardFromDraws));
+                        winnerCards = new List<Card> {card};
+                    }
 
                     else if (winnerValue == currentValue) winnerCards.Add(card);
+                    
+                    else CardsFromAllRounds.Add(card);
                 }
             }
             
