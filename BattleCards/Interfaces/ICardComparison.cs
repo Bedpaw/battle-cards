@@ -5,6 +5,11 @@ namespace BattleCards.Interfaces
 {
     public interface ICardComparison
     {
-        public Card CompareCards(string categoryToCompare, List<Card> cardsToCompare);
+        public List<Card> CardsFromAllRounds { get; set; }
+        public List<Card> WinnerCardsFromLastRound { get; set; }
+        
+        public void CompareCards(string categoryToCompare, List<Card> cardsToCompare);
+        public bool IsDraw();
+        void ClearLastCompare();
     }
 }

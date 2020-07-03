@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using BattleCards.Interfaces;
 
 namespace BattleCards
@@ -24,47 +25,59 @@ namespace BattleCards
             while (true)
             {
                 var cardsToCompare = Players.GiveFirstCard();
+                var categoryToCompare = ChooseCategoryToCompare(Players.ActivePlayer);
                 
-                Display.ShowMenuForChoosingCompareCategory(Players.ActivePlayer.CardForActualRound, Players.ActivePlayer.Nick);
-                
-                var categoryToCompare = Players.ActivePlayer.CategorySelector.SelectCategory(Players.ActivePlayer.CardForActualRound);
-             
                 Display.ShowAllCardsInRound(Players.PlayersList, categoryToCompare);
+                Compare.CompareCards(categoryToCompare, cardsToCompare);
                 
-                var winnerCard = Compare.CompareCards(categoryToCompare, cardsToCompare);
-                var playerWhoWinRound = Players.GetCardOwner(winnerCard);
-                playerWhoWinRound.TakeAllCards(cardsToCompare);
-
-                Display.ShowInformationAboutRoundWinner(playerWhoWinRound);
+                if (Compare.IsDraw()) StartDrawLoop(categoryToCompare);
                 
-
-                Players.RemovePlayersWithoutCards();
-                if (Players.PlayersList.Count == 1) break;
-
+                UpdateGameAfterRound();
+                
+                if (Players.OnlyOneAlive()) break;
                 Players.SwapActivePlayer();
             }
-            DisplayEndGameResults();
+            Display.ShowEndGameMessage(Players.PlayersList[0].Nick);
         }
 
-        private void DisplayEndGameResults()
+        private void StartDrawLoop(string categoryToCompare)
+        { 
+            do
+            {
+                var playersStillInRound = new Players(Players.PlayersList
+                    .FindAll(player => Compare.WinnerCardsFromLastRound
+                    .Exists(card => player.CardForActualRound.Equals(card))));
+
+                var cardsToCompare = playersStillInRound.GiveFirstCard();
+                    
+                Display.ShowAllCardsInRound(playersStillInRound.PlayersList, categoryToCompare);
+                Compare.CompareCards(categoryToCompare, cardsToCompare);
+                    
+            } while (Compare.IsDraw()); 
+        }
+
+        private string ChooseCategoryToCompare(Player aPlayer)
         {
-            throw new NotImplementedException();
+            Display.ShowMenuForChoosingCompareCategory(aPlayer.CardForActualRound, aPlayer.Nick);
+            return aPlayer.CategorySelector.SelectCategory(aPlayer.CardForActualRound);
         }
 
-        private void DealCardsForPlayers(int numberOfCardsForEachPlayer,  List<Card> cardsDeck)
-        {    // Refactor to test only
-            var i = 2;
+        private void UpdateGameAfterRound()
+        {
+            var winner = Players.GetCardOwner(Compare.WinnerCardsFromLastRound[0]);
+            winner.TakeAllCards(Compare.CardsFromAllRounds);
+            Compare.ClearLastCompare();
+
+            Display.ShowInformationAboutRoundWinner(winner);
+            Players.RemovePlayersWithoutCards();
+
+        }
+        private void DealCardsForPlayers(int numberOfCardsForEachPlayer, List<Card> cardsDeck)
+        {
             foreach (var card in cardsDeck)
             {
-                if (i % 2 == 0)
-                {
-                    Players.PlayersList[0].Deck.Enqueue(card);
-                }
-                else
-                {
-                    Players.PlayersList[1].Deck.Enqueue(card);
-                }
-                i++;
+                Players.ActivePlayer.Deck.Enqueue(card);
+                Players.SwapActivePlayer();
             }
         }
     }

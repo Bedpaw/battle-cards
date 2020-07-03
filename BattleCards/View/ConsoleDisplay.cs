@@ -18,7 +18,7 @@ namespace BattleCards.View
             Console.WriteLine("Please choose Category to compare: ");
         }
         public void ShowAllCardsInRound(List<Player> players, string category )
-        {
+        {    Console.Clear();
             foreach (var player in players)
             {
                 var card = player.CardForActualRound;
@@ -28,12 +28,16 @@ namespace BattleCards.View
             }
         }
         public void ShowInformationAboutRoundWinner(Player roundWinner)
-        {
+        {    
             Console.WriteLine($"{roundWinner.Nick} has won this round!");
             Console.WriteLine("Press any button for next round");
             Console.ReadKey();
             Console.Clear();
+        }
 
+        public void ShowEndGameMessage(string winnerNick)
+        {
+            Console.WriteLine($"Congrats {winnerNick}, you have won a game!");
         }
     }
 }

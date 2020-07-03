@@ -5,20 +5,37 @@ using BattleCards.Interfaces;
 namespace BattleCards.Deck
 {
     public class IsCategoryValueTheBiggest : ICardComparison
-    { 
-        public Card CompareCards(string categoryToCompare, List<Card> cardsToCompare)
+    {
+        public List<Card> CardsFromAllRounds { get; set; } = new List<Card>();
+        public List<Card> WinnerCardsFromLastRound { get; set;}
+        
+        public void CompareCards(string categoryToCompare, List<Card> cardsToCompare)
         {
-            var categoryIndex = int.Parse(categoryToCompare);
-            var winnerCard = cardsToCompare[0];
+            /*
+             * If it's draw, return list of all winners Cards, else return List with 1 winnerCard
+             */
+
+            var winnerCards = new List<Card> { cardsToCompare[0] };
             
-            foreach (var card in cardsToCompare.Where(card => card.CardStats[categoryIndex].Value > winnerCard.CardStats[categoryIndex].Value))
+            foreach (var card in cardsToCompare)
             {
-                winnerCard = card;
+                var winnerValue = winnerCards[0].GetCategoryById(categoryToCompare).Value;
+                var currentValue = card.GetCategoryById(categoryToCompare).Value;
+
+                if (currentValue > winnerValue) winnerCards = new List<Card> { card };
+
+                else if (winnerValue == currentValue) winnerCards.Add(card);
             }
 
-            return winnerCard;
-
+            CardsFromAllRounds.AddRange(winnerCards);
+            WinnerCardsFromLastRound = winnerCards;
         }
         
+        public bool IsDraw() => WinnerCardsFromLastRound.Count != 1;
+        public void ClearLastCompare()
+        {
+            CardsFromAllRounds = new List<Card>();
+            WinnerCardsFromLastRound = new List<Card>();
+        }
     }
 }

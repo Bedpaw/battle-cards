@@ -36,7 +36,9 @@ namespace BattleCards
 
         public Player GetCardOwner(Card winnerCard)
         {
-            return PlayersList.Find(player => player.CardForActualRound.Equals(winnerCard));
+            return PlayersList.Find(player => ReferenceEquals(player.CardForActualRound, winnerCard));
         }
+
+        public bool OnlyOneAlive() => PlayersList.Count == 1;
     }
 }

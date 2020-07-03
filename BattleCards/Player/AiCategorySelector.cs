@@ -1,4 +1,5 @@
-﻿using BattleCards.Interfaces;
+﻿using System;
+using BattleCards.Interfaces;
 
 namespace BattleCards
 {
@@ -6,7 +7,7 @@ namespace BattleCards
     {
         public string SelectCategory(Card cardToChooseCategory)
         {
-            throw new System.NotImplementedException();
+            return new Random().Next(1,4).ToString();
         }
     }
 }
