@@ -10,8 +10,9 @@ namespace BattleCards.Deck
         public List<Card> WinnerCardsFromLastRound { get; set;}
         
         public void CompareCards(string categoryToCompare, List<Card> cardsToCompare)
-        {
+        { 
             var winnerCards = new List<Card> ();
+            CardsFromAllRounds.AddRange(cardsToCompare);
             
             foreach (var card in cardsToCompare)
             {
@@ -23,17 +24,13 @@ namespace BattleCards.Deck
 
                     if (currentValue > winnerValue)
                     {
-                        winnerCards.ForEach(cardFromDraws => CardsFromAllRounds.Add(cardFromDraws));
                         winnerCards = new List<Card> {card};
                     }
 
                     else if (winnerValue == currentValue) winnerCards.Add(card);
-                    
-                    else CardsFromAllRounds.Add(card);
                 }
             }
             
-            CardsFromAllRounds.AddRange(winnerCards);
             WinnerCardsFromLastRound = winnerCards;
         }
         

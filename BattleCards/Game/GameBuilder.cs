@@ -16,7 +16,7 @@ namespace BattleCards
 
         public virtual void BuildCardsDeck()
         {
-            _deck = new DeckCreator(120).Deck;
+            _deck = new DeckCreator(40).Deck;
         }
         public abstract void BuildPlayersList();
 

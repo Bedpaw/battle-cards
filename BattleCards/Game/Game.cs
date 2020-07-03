@@ -24,6 +24,7 @@ namespace BattleCards
         {
             while (true)
             {
+                Display.ShowGameStatus(Players.PlayersList, Players.ActivePlayer.Nick); 
                 var cardsToCompare = Players.GiveFirstCard();
                 var categoryToCompare = ChooseCategoryToCompare(Players.ActivePlayer);
                 
@@ -54,10 +55,22 @@ namespace BattleCards
             } while (Compare.IsDraw()); 
         }
 
-        private Players GetPlayersStillInRound() => new Players(Players.PlayersList
-            .FindAll(player => Compare.WinnerCardsFromLastRound
-            .Exists(card => player.CardForActualRound.Equals(card))));
-        
+        private Players GetPlayersStillInRound()
+        {
+            var playersWhichDrawInLastRound = Players.PlayersList
+                .FindAll(player => Compare.WinnerCardsFromLastRound
+                    .Exists(card => player.CardForActualRound.Equals(card)));
+
+            return new Players(playersWhichDrawInLastRound.FindAll(player =>
+            {
+                if (player.Deck.Count >= 2) return true;
+                
+                Display.ShowPlayerHasNotEnoughCardsForDrawRounds(player.Nick);
+                return false;
+
+            }));
+        }
+
         private string ChooseCategoryToCompare(Player aPlayer)
         {
             Display.ShowMenuForChoosingCompareCategory(aPlayer.CardForActualRound, aPlayer.Nick);

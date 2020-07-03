@@ -10,5 +10,7 @@ namespace BattleCards.Interfaces
         public void ShowInformationAboutRoundWinner(Player roundWinner, int numberOfCardsWon);
         public void ShowEndGameMessage(string winnerNick);
         void ShowDrawMessage(List<Player> playersStillInRound);
+        void ShowGameStatus(List<Player> playersPlayersList, string activePlayerNick);
+        void ShowPlayerHasNotEnoughCardsForDrawRounds(string playerNick);
     }
 }

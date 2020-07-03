@@ -3,9 +3,8 @@ using BattleCards.View;
 
 namespace BattleCards
 {
-    public class AiVersusAiBuilder : GameBuilder
+    public class BlitzAiVersusAiBuilder : GameBuilder
     {
-
         public override void BuildPlayersList()
         {
             _playersList = new List<Player>
@@ -17,7 +16,7 @@ namespace BattleCards
 
         public override void BuildDisplay()
         {
-            _display = new ConsoleDisplay();
+            _display = new NoDisplay();
         }
     }
 }

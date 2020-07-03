@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using BattleCards.Interfaces;
 
 namespace BattleCards
 {
@@ -11,14 +10,16 @@ namespace BattleCards
             "Human vs Human",
             "Human vs Human vs Ai vs Ai",
             "Ai vs Ai",
+            "Blitz Ai vs Ai",
             "Full default game"
         };
         public static void DisplayGameOptions()
         {
-
+            var i = 1;
             foreach (var option in gameOptions)
             {
-                Console.WriteLine($"Play {option} mode");
+                Console.WriteLine($"[{i}] Play {option} mode");
+                i++;
             }
             Console.WriteLine("\nPlease chose game mode:");
         }
@@ -45,6 +46,8 @@ namespace BattleCards
                 1 => new HumanVersusHumanGameBuilder(),
                 2 => new TwoHumanTwoAiBuilder(),
                 3 => new AiVersusAiBuilder(),
+                4 => new BlitzAiVersusAiBuilder(),
+                5 => new FullDefaultGameBuilder(),
                 _ => throw new IndexOutOfRangeException()
             };
 

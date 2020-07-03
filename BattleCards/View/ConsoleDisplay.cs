@@ -8,7 +8,7 @@ namespace BattleCards.View
     public class ConsoleDisplay : IDisplay
     {
         public void ShowMenuForChoosingCompareCategory(Card cardToCompare, string activePLayerNick)
-        {
+        {   Console.Clear(); 
             Console.WriteLine($"{activePLayerNick} draw {cardToCompare.Name} with stats below:\n");
             
             foreach (var (key, value) in cardToCompare.CardStats)
@@ -42,13 +42,31 @@ namespace BattleCards.View
 
         public void ShowDrawMessage(List<Player> playersStillInRound)
         {
-            Console.WriteLine("IT'S DRAW!");
+            Console.WriteLine("\nIT'S DRAW!");
             Console.WriteLine("STILL IN GAME:");
             foreach (var player in playersStillInRound)
             {
                 Console.WriteLine(player.Nick);
                 Thread.Sleep(500);
             }
+            Thread.Sleep(1000);
+        }
+
+        public void ShowGameStatus(List<Player> playersPlayersList, string activePlayerNick)
+        {   
+            Console.Clear(); 
+            foreach (var player in playersPlayersList)
+            {
+                Console.WriteLine($"{player.Nick} has {player.Deck.Count} cards");
+            }
+            Console.WriteLine($"\nTime for {activePlayerNick}");
+            Console.WriteLine("Press any key to start round");
+            Console.ReadKey();
+        }
+
+        public void ShowPlayerHasNotEnoughCardsForDrawRounds(string playerNick)
+        {
+            Console.WriteLine($"{playerNick} cannot participate in extra round, because he has no enough cards... ");
             Thread.Sleep(1000);
         }
     }
