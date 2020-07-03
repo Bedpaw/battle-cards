@@ -11,22 +11,22 @@ namespace BattleCards.Deck
         
         public void CompareCards(string categoryToCompare, List<Card> cardsToCompare)
         {
-            /*
-             * If it's draw, return list of all winners Cards, else return List with 1 winnerCard
-             */
-
-            var winnerCards = new List<Card> { cardsToCompare[0] };
+            var winnerCards = new List<Card> ();
             
             foreach (var card in cardsToCompare)
             {
-                var winnerValue = winnerCards[0].GetCategoryById(categoryToCompare).Value;
-                var currentValue = card.GetCategoryById(categoryToCompare).Value;
+                if (winnerCards.Count == 0) winnerCards.Add(card); // init first card 
+                else
+                {
+                    var winnerValue = winnerCards[0].GetCategoryById(categoryToCompare).Value;
+                    var currentValue = card.GetCategoryById(categoryToCompare).Value;
 
-                if (currentValue > winnerValue) winnerCards = new List<Card> { card };
+                    if (currentValue > winnerValue) winnerCards = new List<Card> {card};
 
-                else if (winnerValue == currentValue) winnerCards.Add(card);
+                    else if (winnerValue == currentValue) winnerCards.Add(card);
+                }
             }
-
+            
             CardsFromAllRounds.AddRange(winnerCards);
             WinnerCardsFromLastRound = winnerCards;
         }

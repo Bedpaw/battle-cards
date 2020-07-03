@@ -24,7 +24,7 @@ namespace BattleCards.View
                 var card = player.CardForActualRound;
                 var cardCategory = card.GetCategoryById(category); 
                 Console.WriteLine($"{player.Nick} shows {card.Name} with {cardCategory.Name} - {cardCategory.Value}");
-                Thread.Sleep(1);
+                Thread.Sleep(1000);
             }
         }
         public void ShowInformationAboutRoundWinner(Player roundWinner)

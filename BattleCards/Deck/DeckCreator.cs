@@ -16,10 +16,10 @@ namespace BattleCards.Deck
             {
                 var cardStats = new Dictionary<int, Category>
                 {
-                    {0, new Category(CategoryNames[0], rnd.Next(0, 100))},
-                    {1, new Category(CategoryNames[1], rnd.Next(0, 100))},
-                    {2, new Category(CategoryNames[2], rnd.Next(0, 100))},
-                    {3, new Category(CategoryNames[3], rnd.Next(0, 100))},
+                    {0, new Category(CategoryNames[0], rnd.Next(0, 3))},
+                    {1, new Category(CategoryNames[1], rnd.Next(0, 3))},
+                    {2, new Category(CategoryNames[2], rnd.Next(0, 3))},
+                    {3, new Category(CategoryNames[3], rnd.Next(0, 3))},
                 };
                 
                 var newCard = new Card(CardNames[rnd.Next(0, 13)], cardStats);

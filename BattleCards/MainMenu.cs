@@ -41,8 +41,10 @@ namespace BattleCards
 
             GameBuilder builder = userChoice switch
             {
-                0 => new DefaultGameBuilder(),
+                0 => new HumanVersusAiBuilder(),
                 1 => new HumanVersusHumanGameBuilder(),
+                2 => new TwoHumanTwoAiBuilder(),
+                3 => new AiVersusAiBuilder(),
                 _ => throw new IndexOutOfRangeException()
             };
 
